@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            border: none;
+            list-style: none;
+        }
+
+        html, body, ul{
+            width: 100%;
+            height: 100%;
+        }
+
+        #ps{
+            position: relative;
+        }
+
+        #ps li{
+            width: 250px;
+            height: 360px;
+            box-shadow: 0 0 10px #000;
+
+            position: absolute;
+
+            transition: all 1s;
+        }
+
+        #ps li.current{
+            left: 50% !important;
+            top: 50% !important;
+            transform: rotate(0deg) translate(-50%, -50%) scale(1.2, 1.2) !important;
+            z-index: 99;
+        }
+        img{
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+</head>
+<body>
+   <ul id="ps"></ul>
+<script src="./src/js/Underscore-min.js"></script>
+<script>
+    // let _ = Math
+    window.onload = function () {
+        var ps = document.getElementById("ps");
+
+        //动态创建li标签
+        for(var i=0; i<30; i++){
+            //创建li标签
+            var li = document.createElement("li");
+            ps.appendChild(li);
+
+            //创建img标签
+            var img = document.createElement("img");
+            img.src = "images/" + (i + 1) + ".jpg";
+            li.appendChild(img);
+        }
+        
+        //获取所有的li
+        var allLis = ps.children;
+
+        var screenW = document.documentElement.clientWidth - 250;
+        var screenH = document.documentElement.clientHeight - 360;
+
+        //遍历
+        for(var j=0; j<allLis.length; j++){
+            //取出单个li标签
+            var li = allLis[j];
+
+            //随机分布
+            li.style.left = _.random(0, screenW) + 'px';
+            li.style.top = _.random(0, screenH) + 'px';
+
+            //随机角度
+            li.style.transform = 'rotate(' + _.random(0, 360) +'deg)';
+
+            //点击事件
+            li.onclick = function () {
+                for(var i = 0; i<allLis.length; i++){
+                    allLis[i].className = '';
+                }
+                this.className = 'current';
+            }
+        }
+    }
+</script>
+</body>
+</html>
+
